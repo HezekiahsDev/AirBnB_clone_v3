@@ -78,12 +78,11 @@ class DBStorage:
         :param id: object id
         :return: found object or None
         """
-        all_class = self.all(cls)
+        class_list = self.all(cls)
 
-        for obj in all_class.values():
+        for obj in class_list.values():
             if id == str(obj.id):
                 return obj
-
         return None
 
     def close(self):
