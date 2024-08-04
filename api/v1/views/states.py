@@ -71,7 +71,7 @@ def update_state(state_id):
         if key not in ["id", "created_at", "updated_at"]:
             setattr(get_obj, key, val)
     get_obj.save()
-    return jsonify(getd_obj.to_json())
+    return jsonify(get_obj.to_json())
 
 @app_views.route("/states/<state_id>", methods=["DELETE"],
                  strict_slashes=False)
