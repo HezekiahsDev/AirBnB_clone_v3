@@ -65,7 +65,7 @@ def update_state(state_id):
     if state_string is None:
         abort(400, 'Not a JSON')
     get_obj = storage.get("State", str(state_id))
-    if fetched_obj is None:
+    if get_obj is None:
         abort(404)
     for key, val in state_string.items():
         if key not in ["id", "created_at", "updated_at"]:
