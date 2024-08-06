@@ -69,7 +69,7 @@ def create_place(city_id):
     data = request.get_json()
     if 'user_id' not in data:
         abort(400, description="Missing user_id")
-
+    
     user = storage.get(User, data['user_id'])
     if not user:
         abort(404, description="User not found")
@@ -102,6 +102,19 @@ def update_place(place_id):
     for key, value in data.items():
         if key not in ignored_fields:
             setattr(place, key, value)
-
+    
     storage.save()
     return make_response(jsonify(place.to_dict()), 200)
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+@swag_from('documentation/place/post_search.yml', methods=['POST'])
+def search_places():
+    """
+    Retrieves Place objects based on criteria provided in the request body.
+    """
+    if not request.is_json:
+        abort(400, description="Not a JSON")
+
+    data = request.get_json()
+    states_id = data.get('states', [])
